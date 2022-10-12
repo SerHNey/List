@@ -4,17 +4,15 @@
 
 typedef struct LOS {
 	int a;
-	char by;
 	struct LOS* next;
 }LOS;
 
-
 LOS* initLOS(int);
 void printlos(LOS*);
-void addelem(LOS* los, int a);
+void addelemtoend(LOS* los, int a);
 void deleteelemlos(LOS* los, int a);
 void deletlos(LOS* los);
-
+void addelemtomiddle(LOS* los, LOS elem, int a);
 
 LOS* initLOS(int n) {
 	LOS* los = calloc(1,sizeof(LOS));
@@ -38,10 +36,14 @@ int main()
 	LOS* los;
 	los = initLOS(10);
 	printlos(los);
-	addelem(los, 10);
+	addelemtoend(los, 10);
 	printlos(los);
 	deleteelemlos(los, 5);
 	printlos(los);
+	LOS item = { 20, NULL };
+	addelemtomiddle(los, item, 0);
+	printlos(los);
+	deletlos(los);
 	return 0;
 
 
@@ -49,15 +51,21 @@ int main()
 void printlos(LOS* los) {
 	printf("\n");
 	printf("Список: ");
-	while (los)
+	if (los != NULL) {
+		while (los != NULL)
+		{
+			printf("%d ", los->a);
+			los = los->next;
+		}
+	}
+	else
 	{
-		printf("%d ", los->a);
-		los = los->next;
+		printf("Список удалён");
 	}
 	printf("\n");
 }
 
-void addelem(LOS* los, int a) {
+void addelemtoend(LOS* los, int a) {
 	int count = 1; // Количество элементов
 	while (los->next != NULL)
 	{
@@ -68,6 +76,19 @@ void addelem(LOS* los, int a) {
 	newelem->next = NULL;
 	los->next = newelem;
 	
+}
+
+void addelemtomiddle(LOS* los,  LOS elem, int a) {
+	LOS* element = malloc(sizeof(LOS));
+	element->a = elem.a;
+	for (size_t i = 0; i < a; i++)
+	{
+		los = los->next;
+	}
+
+	void* temp = los->next;
+	los->next = element;
+	element->next = temp;
 }
 
 void deleteelemlos(LOS* los, int a) {
@@ -83,10 +104,20 @@ void deleteelemlos(LOS* los, int a) {
 	free(los);
 }
 void deletlos(LOS* los) {
-	while (los->next != NULL)
+	LOS* los1 = los;
+	while (los1)
 	{
-
+		los1 = los->next;
+		free(los);
+		los = los1;
 	}
+	printf("\nСписок удалён1");
 }
+
+LOS* Change(LOS* los, int a, int b) {
+
+
+}
+
 
 
