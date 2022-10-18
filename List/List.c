@@ -12,7 +12,7 @@ void printlos(LOS*);
 void addelemtoend(LOS* los, int a);
 void deleteelemlos(LOS* los, int a);
 void deletlos(LOS* los);
-void addelemtomiddle(LOS* los, LOS elem, int a);
+LOS* addelemtomiddle(LOS* los, LOS elem, int a);
 
 LOS* initLOS(int n) {
 	LOS* los = calloc(1,sizeof(LOS));
@@ -41,7 +41,7 @@ int main()
 	deleteelemlos(los, 5);
 	printlos(los);
 	LOS item = { 20, NULL };
-	addelemtomiddle(los, item, 0);
+	los = addelemtomiddle(los, item, 1);
 	printlos(los);
 	deletlos(los);
 	return 0;
@@ -51,17 +51,18 @@ int main()
 void printlos(LOS* los) {
 	printf("\n");
 	printf("Список: ");
-	if (los != NULL) {
+	if (los == NULL) {
+		printf("Список удалён");
+		return;
+	}
+	
 		while (los != NULL)
 		{
 			printf("%d ", los->a);
 			los = los->next;
 		}
-	}
-	else
-	{
-		printf("Список удалён");
-	}
+		
+	
 	printf("\n");
 }
 
@@ -78,17 +79,29 @@ void addelemtoend(LOS* los, int a) {
 	
 }
 
-void addelemtomiddle(LOS* los,  LOS elem, int a) {
+LOS* addelemtomiddle(LOS* los,  LOS elem, int a) {
 	LOS* element = malloc(sizeof(LOS));
 	element->a = elem.a;
-	for (size_t i = 0; i < a; i++)
-	{
-		los = los->next;
-	}
 
-	void* temp = los->next;
-	los->next = element;
-	element->next = temp;
+	if (a == 1) {
+		element->next = los;
+		los = element;
+	}
+	else
+	{
+		 for (size_t i = 1; i < a-1; i++)
+		{
+			los = los->next;
+			if (!(los->next)) {
+			break;
+			}
+		}
+
+		void* temp = los->next;
+		los->next = element;
+		element->next = temp;
+	}
+	return los;
 }
 
 void deleteelemlos(LOS* los, int a) {
