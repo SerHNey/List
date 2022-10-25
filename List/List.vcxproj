@@ -129,6 +129,12 @@
   <ItemGroup>
     <ClCompile Include="List.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="List.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,18 +1,4 @@
-﻿#include <stdio.h>
-#include <malloc.h>
-
-
-typedef struct LOS {
-	int a;
-	struct LOS* next;
-}LOS;
-
-LOS* initLOS(int);
-void printlos(LOS*);
-void addelemtoend(LOS* los, int a);
-void deleteelemlos(LOS* los, int a);
-void deletlos(LOS* los);
-LOS* addelemtomiddle(LOS* los, LOS elem, int a);
+﻿#include "Source.h"
 
 LOS* initLOS(int n) {
 	LOS* los = calloc(1,sizeof(LOS));
@@ -36,8 +22,6 @@ int main()
 	LOS* los;
 	los = initLOS(10);
 	printlos(los);
-	addelemtoend(los, 10);
-	printlos(los);
 	deleteelemlos(los, 5);
 	printlos(los);
 	LOS item = { 20, NULL };
@@ -48,7 +32,7 @@ int main()
 
 
 }
-void printlos(LOS* los) {
+void printlos(LOS* los) { // Вывод списка
 	printf("\n");
 	printf("Список: ");
 	if (los == NULL) {
@@ -61,23 +45,10 @@ void printlos(LOS* los) {
 			printf("%d ", los->a);
 			los = los->next;
 		}
-		
-	
+
 	printf("\n");
 }
 
-void addelemtoend(LOS* los, int a) {
-	int count = 1; // Количество элементов
-	while (los->next != NULL)
-	{
-		los = los->next;
-	}
-	LOS* newelem = calloc(count, sizeof(LOS));
-	newelem->a = a;
-	newelem->next = NULL;
-	los->next = newelem;
-	
-}
 
 LOS* addelemtomiddle(LOS* los,  LOS elem, int a) {
 	LOS* element = malloc(sizeof(LOS));
@@ -108,7 +79,6 @@ void deleteelemlos(LOS* los, int a) {
 	a--;
 	while (los->a != a)
 	{
-
 		los = los->next;
 	}
 	LOS* copy = los;
@@ -116,6 +86,7 @@ void deleteelemlos(LOS* los, int a) {
 	copy->next = los->next;
 	free(los);
 }
+
 void deletlos(LOS* los) {
 	LOS* los1 = los;
 	while (los1)
@@ -127,8 +98,41 @@ void deletlos(LOS* los) {
 	printf("\nСписок удалён1");
 }
 
-LOS* Change(LOS* los, int a, int b) {
-
+LOS* Change(LOS* los, int i, int b) {
+	LOS* min = los;
+	LOS* max = los;
+	LOS* _max = los;
+	if (i != 0) {
+		for (size_t n = 0; n < i - 1; n++)
+		{
+			min = min->next;
+		}
+		for (size_t n = 0; n < b - 1; n++)
+		{
+			_max = _max->next;
+		}
+		LOS* l2 = _max->next;
+		max = l2->next;
+		LOS* l1 = min->next;
+		min->next = l2;
+		_max->next = l1;
+		l2->next = l1->next;
+		l1->next = max;
+		return los;
+	}
+	else {
+		for (size_t n = 0; n < b - 1; n++)
+		{
+			_max = _max->next;
+		}
+		LOS* l2 = _max->next;
+		max = l2->next;
+		LOS* l1 = min->next;
+		l2->next = l1;
+		_max->next = min;
+		min->next = max;
+		return l2;
+	}
 
 }
 
