@@ -22,10 +22,12 @@ int main()
 	LOS* los;
 	los = initLOS(10);
 	printlos(los);
-	deleteelemlos(los, 5);
+	deleteelemlos(los, 0);
 	printlos(los);
 	LOS item = { 20, NULL };
 	los = addelemtomiddle(los, item, 1);
+	printlos(los);
+	Change(los, 2, 6);
 	printlos(los);
 	deletlos(los);
 	return 0;
@@ -76,7 +78,7 @@ LOS* addelemtomiddle(LOS* los,  LOS elem, int a) {
 }
 
 void deleteelemlos(LOS* los, int a) {
-	a--;
+	
 	while (los->a != a)
 	{
 		los = los->next;
@@ -95,7 +97,7 @@ void deletlos(LOS* los) {
 		free(los);
 		los = los1;
 	}
-	printf("\nСписок удалён1");
+	printf("\nСписок удалён");
 }
 
 LOS* Change(LOS* los, int i, int b) {
